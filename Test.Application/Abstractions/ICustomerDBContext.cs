@@ -8,10 +8,10 @@ using Test.Entities;
 
 namespace Test.Application.Abstractions
 {
-    internal interface ICustomerDBContext
+    public interface ICustomerDBContext
     {
-        public DbSet<Customer> Customers { get; set; }
-
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+
+        public DbSet<Customer> Customers { get; set; }
     }
 }
