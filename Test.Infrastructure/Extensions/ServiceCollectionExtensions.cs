@@ -17,9 +17,8 @@ namespace Test.Infrastructure.Extensions
         {
             var connectionString = config.GetConnectionString(connectionStringName);
 
-            services
-               .AddMSSQL(connectionString)
-               .AddScoped<ICustomerDBContext>(provider => provider.GetService<CustomerDBContext>());
+            services.AddMSSQL(connectionString);
+            services.AddScoped<ICustomerDBContext>(provider => provider.GetService<CustomerDBContext>());
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient(typeof(ICustomerRepository), typeof(CustomerRepository));
 
@@ -30,9 +29,9 @@ namespace Test.Infrastructure.Extensions
         {
             services.AddDbContext<CustomerDBContext>(options =>
                        options.UseSqlServer(connectionString,
-                       b => b.MigrationsAssembly(typeof(DbContext).Assembly.FullName)));
-            using var scope = services.BuildServiceProvider().CreateScope();
-            var dbContext = scope.ServiceProvider.GetRequiredService<DbContext>();
+                       b => b.MigrationsAssembly(typeof(CustomerDBContext).Assembly.FullName)));
+            //using var scope = services.BuildServiceProvider().CreateScope();
+            //var dbContext = scope.ServiceProvider.GetRequiredService<DbContext>();
             //dbContext.Database.Migrate();
             return services;
         }

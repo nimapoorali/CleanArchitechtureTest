@@ -13,7 +13,7 @@ namespace Test.Infrastructure.Persistence
     {
         public DbSet<Customer> Customers { get; set; }
 
-        protected CustomerDBContext(DbContextOptions options) : base(options)
+        public CustomerDBContext(DbContextOptions<CustomerDBContext> options) : base(options)
         {
 
         }
@@ -25,8 +25,15 @@ namespace Test.Infrastructure.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //add-migration initializeDatabase -context CustomerDBContext -outputdir Persistence\Migrations -startupproject Test.Api
+            //update-database -context CustomerDBContext -startupproject Test.Api
+            modelBuilder
+                .Entity<Customer>()
+                .Property(c => c.PhoneNumber)
+                .HasColumnType("varchar");
 
             base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
         }
     }
 }
