@@ -9,7 +9,7 @@ namespace Test.Entities
         public string Lastname { get; set; }
         public DateTime DateOfBirth { get; set; }
         //public ulong PhoneNumber { get; set; }
-        [MaxLength(12)]
+        [MaxLength(13)]
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public string BankAccountNumber { get; set; }
